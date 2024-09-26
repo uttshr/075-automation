@@ -1,6 +1,9 @@
 package automationScript;
 
 import static org.junit.Assert.assertEquals;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.junit.After;
 import org.junit.Before;
@@ -10,7 +13,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class VerifyTotalOrders {
+public class ObtainCurrentOrder {
 	
 	WebDriver driver;
 	String URL = "https://demo.opencart.com/admin/index.php";
@@ -36,12 +39,24 @@ public class VerifyTotalOrders {
 		
 		Thread.sleep(2000);
        
-		WebElement TotalOrders = driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[2]/div[1]/div[1]/div/div[2]"));
-		String verifyorders = TotalOrders.getText();
-		System.out.println(verifyorders);
+		try {
+			WebElement TotalOrders = driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[2]/div[1]/div[1]/div/div[2]"));
+			String verifyorders = TotalOrders.getText();
+	        LocalDateTime currentDate = LocalDateTime.now();
+	        
+	        // Format the date as a string (optional)
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	        String formattedDate = currentDate.format(formatter);
+	        
+	        System.out.println("Current order as of "+formattedDate+" is "+verifyorders);
+	        
+	        
+			
+						
+		}catch (Exception e) {
+			System.out.println("Elements could not be loaded. Please execute test case again!");
+		}
 		
-		WebElement viewmore = driver.findElement(By.xpath("/html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[3]/a[1]"));
-		viewmore.click();
 	}
 	
 	@After

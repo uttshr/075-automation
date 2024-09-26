@@ -51,6 +51,7 @@ public class VerifyDashboard {
 	
 	@After
 	public void TearDown() {
+		driver.quit();
 		
 	}
 	
